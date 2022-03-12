@@ -1,0 +1,22 @@
+{
+	"name": "assignments",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"start": "./node_modules/.bin/esbuild ./main.ts --bundle --outfile=out.cjs --platform=node && node out.cjs"
+	},
+	"keywords": [],
+	"author": "",
+	"devDependencies": {
+		"@types/inquirer": "^8.2.0",
+		"dotenv": "^16.0.0",
+		"esbuild": "^0.14.25",
+		"prettier": "^2.5.1"
+	},
+	"dependencies": {
+		"@notionhq/client": "^1.0.2",
+		"inquirer": "^8.2.1",
+		"inquirer-datepicker": "^2.0.1"
+	}
+}
