@@ -4,7 +4,7 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"start": "./node_modules/.bin/esbuild ./main.ts --bundle --outfile=out.cjs --platform=node && node out.cjs"
+		"start": "./node_modules/.bin/esbuild ./src/main.ts --bundle --outfile=out.cjs --platform=node && node out.cjs"
 	},
 	"keywords": [],
 	"author": "",
