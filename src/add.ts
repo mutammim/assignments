@@ -101,12 +101,22 @@ export async function add() {
 		},
 	]);
 
-	/* --------------------------- Convert date format -------------------------- */
+	/* ---------------------- Handle different date options --------------------- */
 
-	// If "Only date" was selected, ensure time is removed from the ISO string
+	let responsesDate = undefined;
 
-	if (responses.dateMode === "Only date")
-		responses.date = responses.date.toISOString().slice(0, 10);
+	if (responses.dateMode === "Only date") {
+		responsesDate = {
+			start: responses.date.toISOString().slice(0, 10)
+		}
+	}
+
+	if (responses.dateMode === "Date and time") {
+		responsesDate = {
+			start: responses.date,
+			time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone as any
+		}
+	}
 
 	/* ------------------------------ Adjust naming ----------------------------- */
 
@@ -138,6 +148,7 @@ export async function add() {
 					},
 				],
 			},
+			Date: undefined,
 			Course: {
 				relation: [
 					{
@@ -163,11 +174,17 @@ export async function add() {
 		},
 	};
 
-	if (responses.date) {
-		(pageData as any).Date.date.start = responses.date;
-		(pageData as any).Date.date.time_zone =
-			Intl.DateTimeFormat().resolvedOptions().timeZone as any;
+	/* ------- Assign or delete Date property, depending on its existence ------- */
+
+	if (responsesDate) {
+		pageData.properties.Date = {
+			date: responsesDate
+		}
+	} else {
+		delete pageData.properties.Date;
 	}
+
+	/* ------------------------------- Create page ------------------------------ */
 
 	await notion.pages.create(pageData);
 
